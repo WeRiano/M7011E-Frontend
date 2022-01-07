@@ -1,7 +1,9 @@
 import { handleFetchError } from "./ErrorHandling";
 
+let backendBaseUrl = "http://127.0.0.1:7999/api/version/1/"
+
 function requestCreateUser(user) {
-    let url = "http://127.0.0.1:7999/auth/users/"
+    let url = backendBaseUrl + "users/"
 
     let body = {
         first_name: user.first_name,
@@ -37,7 +39,7 @@ function requestCreateUser(user) {
 
 function requestCreateAuthToken(email, password) {
     // TODO: Don't hardcode location for backend server
-    let url = "http://127.0.0.1:7999/auth/token/login/"
+    let url = backendBaseUrl + "token/login/"
 
     let body = {
         email: email,
@@ -67,7 +69,7 @@ function requestCreateAuthToken(email, password) {
 
 function requestDestroyAuthToken(auth_token) {
     // TODO: Don't hardcode location for backend server
-    let url = "http://127.0.0.1:7999/auth/token/logout/"
+    let url = backendBaseUrl + "token/logout/"
 
     return fetch(url, {
         method: 'POST',
@@ -85,7 +87,7 @@ function requestDestroyAuthToken(auth_token) {
 
 function requestUserInfo(auth_token) {
     // TODO: Don't hardcode location for backend server
-    let url = "http://127.0.0.1:7999/auth/users/me/"
+    let url = backendBaseUrl + "users/me/"
 
     return fetch(url, {
         method: 'GET',
@@ -103,7 +105,7 @@ function requestUserInfo(auth_token) {
 
 function requestEditUserPassword(newPassword, confirmNewPassword, currentPassword, auth_token) {
     // TODO: Don't hardcode location for backend server
-    let url = "http://127.0.0.1:7999/auth/users/set_password/"
+    let url = backendBaseUrl + "users/set_password/"
 
     let inputErr = false
     return fetch(url, {
@@ -135,7 +137,7 @@ function requestEditUserPassword(newPassword, confirmNewPassword, currentPasswor
 
 function requestEditUserInfo(user, auth_token) {
     // TODO: Don't hardcode location for backend server
-    let url = "http://127.0.0.1:7999/auth/users/update_profile/"
+    let url = backendBaseUrl + "users/update_profile/"
 
     let inputErr = false
     return fetch(url, {
@@ -166,7 +168,7 @@ function requestEditUserInfo(user, auth_token) {
 }
 
 function requestGetUserImage(auth_token) {
-    let url = "http://127.0.0.1:7999/auth/users/get_image/"
+    let url = backendBaseUrl + "users/get_image/"
 
     return fetch(url, {
         method: 'GET',
@@ -185,7 +187,7 @@ function requestGetUserImage(auth_token) {
 
 function requestEditUserImage(img, imgType, auth_token) {
     // TODO: Don't hardcode location for backend server
-    let url = "http://127.0.0.1:7999/auth/users/update_image/"
+    let url = backendBaseUrl + "users/update_image/"
 
     return fetch(url, {
         method: 'PUT',
