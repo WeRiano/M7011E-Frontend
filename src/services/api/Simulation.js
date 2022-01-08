@@ -1,7 +1,10 @@
 import { handleFetchError } from "./ErrorHandling";
 
+let simulationIP = process.env.REACT_APP_SIMULATION_IP
+let simulationBaseUrl = "http://" + simulationIP + "/api/version/1/"
+
 function requestGetSimCond(auth_token) {
-    let url = "http://127.0.0.1:8000/api/version/1/get_current_conditions/all/"
+    let url = simulationBaseUrl + "get_current_conditions/all/"
 
     return fetch(url, {
         method: 'GET',
@@ -18,7 +21,7 @@ function requestGetSimCond(auth_token) {
 }
 
 function requestEditDelta(delta, auth_token) {
-    let url = "http://127.0.0.1:8000/api/version/1/set_update_frequency/" + delta + "/"
+    let url = simulationBaseUrl + "set_update_frequency/" + delta + "/"
 
     let inputErr = false
     return fetch(url, {
@@ -41,7 +44,7 @@ function requestEditDelta(delta, auth_token) {
 }
 
 function requestEditBufferSettings(storing, using, auth_token) {
-    let url = "http://127.0.0.1:8000/api/version/1/set_buffer_settings/"
+    let url = simulationBaseUrl + "set_buffer_settings/"
     url += storing + "/"
     url += using + "/"
 
