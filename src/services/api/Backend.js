@@ -1,7 +1,8 @@
 import { handleFetchError } from "./ErrorHandling";
 
-let backendIP = process.env.REACT_APP_BACKEND_IP
-let backendBaseUrl = "http://" + backendIP + ":7999/api/version/1/"
+let backendPort = 7999;
+let backendIP = process.env.REACT_APP_BACKEND_IP;
+let backendBaseUrl = "http://" + backendIP + ":" + backendPort + "/api/version/1/"
 
 function requestCreateUser(user) {
     let url = backendBaseUrl + "users/"

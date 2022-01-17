@@ -1,5 +1,6 @@
 import { handleFetchError } from "./ErrorHandling";
 
+let simulationPort = 8000;
 let simulationIP = process.env.REACT_APP_SIMULATION_IP
 let simulationBaseUrl = "http://" + simulationIP + "/api/version/1/"
 

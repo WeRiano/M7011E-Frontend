@@ -16,6 +16,8 @@ RUN sh create-env-file.sh REACT_APP_AUTH_TOKEN_SECRET_PHRASE=$REACT_APP_AUTH_TOK
 
 RUN npm run build
 
+RUN echo $REACT_APP_SIMULATION_IP
+
 # production environment
 FROM nginx:stable-alpine as frontend-run
 COPY --from=frontend-build /app/build /usr/share/nginx/html
