@@ -25,8 +25,7 @@ export default function Profile() {
   const [error, setError] = useState('')
   const [info, setInfo] = useState('')
 
-  const fetchUserImage = async () => {
-    let token = loadToken()
+  const fetchUserImage = async (token) => {
     let request = requestGetUserImage(token)
     const [success, data] = await request
     if (success) {
@@ -36,19 +35,24 @@ export default function Profile() {
     }
   }
 
-  useEffect(() => {
-    let token = loadToken()
-
-    const fetchUserInfo = async () => {
+  const fetchUserInfo = async (token) => {
       let request = requestUserInfo(token)
       const [success, data] = await request
       if (success) {
         setInitData(data)
+        emailRef.current.value = ''
+        firstNameRef.current.value = ''
+        lastNameRef.current.value = ''
+        addressRef.current.value = ''
+        cityRef.current.value = ''
+        zipCodeRef.current.value = ''
       }
     }
 
-    fetchUserInfo()
-    fetchUserImage()
+  useEffect(() => {
+    let token = loadToken()
+    fetchUserInfo(token)
+    fetchUserImage(token)
   }, [])
 
   async function handleUpdateAccountInfo(e) {
@@ -67,18 +71,32 @@ export default function Profile() {
     let request = requestEditUserInfo(user, token)
     const [success, data] = await request
     if (success) {
-      window.location.reload(false)
+      let token = loadToken()
+      fetchUserInfo(token)
+      setInfo('Updated user info!')
     } else {
+      if (data["first_name"] != undefined) {
+        setError("First name: " + data["first_name"])
+        return
+      }
+      if (data["last_name"] != undefined) {
+        setError("Last name: " + data["last_name"])
+        return
+      }
       if (data["email"] != undefined) {
         setError("Email: " + data["email"])
         return
       }
-      if (data["password"] != undefined) {
-        setError("Password: " + data["password"])
-        return
-      }
       if (data["zip_code"] != undefined) {
         setError("Zip Code: " + data["zip_code"])
+        return
+      }
+      if (data["address"] != undefined) {
+        setError("Address: " + data["address"])
+        return
+      }
+      if (data["city"] != undefined) {
+        setError("City: " + data["city"])
         return
       }
     }
@@ -95,7 +113,9 @@ export default function Profile() {
     const [success, data] = await request
     if (success) {
       setInfo("Updated user password!")
-      window.location.reload(false)
+      curPassRef.current.value = ''
+      newPassRef.current.value = ''
+      newPassConfRef.current.value = ''
     } else {
       if (data["non_field_errors"] != undefined) {
         setError(data["non_field_errors"])

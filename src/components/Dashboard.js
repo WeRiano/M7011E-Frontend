@@ -69,8 +69,8 @@ export default function Dashboard() {
     setInfo('')
     setError('')
     let delta = newSimDeltaRef.current.value
-    if (typeof(delta) != "number") {
-      setError("Simulation update frequency must be an integer.")
+    if (isNaN(delta)) {
+      setError("Simulation update frequency must be an number.")
       return
     }
     let token = loadToken()
