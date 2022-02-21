@@ -92,7 +92,7 @@ export default function Dashboard() {
     let request = requestEditBufferSettings(storing/100, using/100, token)
     const [success, data] = await request
     if (!success) {
-      // TODO: Visual error for user
+      setError(data["error"])
     }
   }
 
@@ -104,7 +104,7 @@ export default function Dashboard() {
         <Card>
           { error && <Alert variant="danger">{error}</Alert> }
           { info && <Alert variant="success">{info}</Alert> }
-          <Table striped bordered >
+          <Table striped="true" bordered="true" >
             <thead>
               <tr>
                 <th>Name</th>
@@ -188,9 +188,15 @@ export default function Dashboard() {
                   {net >= 0 ? " over-producing " : " under-producing "}
                   with a net production of:
                 </Card.Text>
-                <Card.Text className="text-center" as="h3">
-                  {net} kWh!
-                </Card.Text>
+                { net > 0 ?
+                    <Card.Text className="text-center" as="h3" style={{ color: 'green' }}>
+                      {net} kWh!
+                    </Card.Text>
+                    :
+                    <Card.Text className="text-center" as="h3" style={{ color: 'red' }}>
+                      {net} kWh!
+                    </Card.Text>
+                  }
               </ListGroup.Item>
               <ListGroup.Item>
                 <Card.Text className="text-center" as="h5">
@@ -216,7 +222,8 @@ export default function Dashboard() {
               </Form>
               <Card.Text className="text-center">
                 Current storing {storing}%
-                ({Math.round((net * (storing / 100)) * 1000) / 1000} kWh) of excessive production.
+                { net > 0 ? " (" + (Math.round((net * (storing / 100)) * 1000) / 1000) + " kWh) " : " "}
+                of excessive production.
               </Card.Text>
               </ListGroup.Item>
               <ListGroup.Item>
@@ -236,7 +243,8 @@ export default function Dashboard() {
               </Form>
               <Card.Text className="text-center">
                 Current using {using}%
-                ({Math.abs(Math.round((net * (using / 100)) * 1000) / 1000)} kWh) of stored power.
+                { net < 0 ? " (" + (Math.abs(Math.round((net * (using / 100)) * 1000) / 1000)) + " kWh) "  : " "}
+                of stored power.
               </Card.Text>
             </ListGroup.Item>
           </ListGroup>

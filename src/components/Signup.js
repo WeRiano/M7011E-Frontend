@@ -3,6 +3,7 @@ import {Button, Card, Col, Container, Form, Row, Alert } from "react-bootstrap";
 import { Link, useNavigate } from 'react-router-dom'
 
 import { useAuth } from "../contexts/AuthContext";
+import { loadToken, storeUser } from "../services/Storage"
 
 export default function Signup() {
   const emailRef = useRef('')

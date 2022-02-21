@@ -5,7 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavigationBar from './components/Navbar'
 import Login from './components/Login'
 import Signup from './components/Signup'
-import Dashboard from './components/Dashboard';
+import Dashboard from './components/Dashboard'
+import Admin from './components/Admin'
 import Profile from './components/Profile'
 import PrivateRoute from './components/PrivateRoute'
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" exact element={<Navigate replace to="/dashboard" />} />
           <Route path="/dashboard" element={<PrivateRoute><Dashboard/></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><Profile/></PrivateRoute>} />
+          <Route path="/admin" element={<PrivateRoute><Admin/></PrivateRoute>} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>

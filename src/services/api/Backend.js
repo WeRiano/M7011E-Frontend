@@ -40,7 +40,6 @@ function requestCreateUser(user) {
 }
 
 function requestCreateAuthToken(email, password) {
-    // TODO: Don't hardcode location for backend server
     let url = backendBaseUrl + "token/login/"
 
     let body = {
@@ -70,7 +69,6 @@ function requestCreateAuthToken(email, password) {
 }
 
 function requestDestroyAuthToken(auth_token) {
-    // TODO: Don't hardcode location for backend server
     let url = backendBaseUrl + "token/logout/"
 
     return fetch(url, {
@@ -88,8 +86,7 @@ function requestDestroyAuthToken(auth_token) {
 }
 
 function requestUserInfo(auth_token) {
-    // TODO: Don't hardcode location for backend server
-    let url = backendBaseUrl + "users/me/"
+    let url = backendBaseUrl + "users/get_profile/"
 
     return fetch(url, {
         method: 'GET',
@@ -106,7 +103,6 @@ function requestUserInfo(auth_token) {
 }
 
 function requestEditUserPassword(newPassword, confirmNewPassword, currentPassword, auth_token) {
-    // TODO: Don't hardcode location for backend server
     let url = backendBaseUrl + "users/set_password/"
 
     let inputErr = false
@@ -138,7 +134,6 @@ function requestEditUserPassword(newPassword, confirmNewPassword, currentPasswor
 }
 
 function requestEditUserInfo(user, auth_token) {
-    // TODO: Don't hardcode location for backend server
     let url = backendBaseUrl + "users/update_profile/"
 
     let inputErr = false
@@ -188,7 +183,6 @@ function requestGetUserImage(auth_token) {
 }
 
 function requestEditUserImage(img, imgType, auth_token) {
-    // TODO: Don't hardcode location for backend server
     let url = backendBaseUrl + "users/update_image/"
 
     return fetch(url, {
@@ -209,5 +203,79 @@ function requestEditUserImage(img, imgType, auth_token) {
     })
 }
 
+function requestGetAllUsers(auth_token) {
+    let url = backendBaseUrl + "admin/get_all_users/"
+
+    let inputErr = false;
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Token " + auth_token
+        }
+    }).then(handleFetchError).then(res => {
+        if (res.status === 400) {
+            inputErr = true
+        }
+        return res.json()
+    }).then((data) => {
+        return (inputErr) ? [false, data] : [true, data]
+    }).catch((error) => {
+        console.error(error)
+        return [false, null]
+    })
+}
+
+function requestDeleteAccount(auth_token, password) {
+    let url = backendBaseUrl + "users/me/"
+
+    let inputErr = false;
+    return fetch(url, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Token " + auth_token
+        },
+        body: JSON.stringify({
+            current_password: password
+        })
+    }).then(handleFetchError).then(res => {
+        if (res.status === 400) {
+            inputErr = true
+        }
+        return res.json()
+    }).then((data) => {
+        return (inputErr) ? [false, data] : [true, data]
+    }).catch((error) => {
+        console.error(error)
+        return [false, null]
+    })
+}
+
+function requestDeleteUser(auth_token, user_id) {
+    let url = backendBaseUrl + "admin/delete_user/" + user_id + "/"
+
+    let inputErr = false
+    return fetch(url, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Token " + auth_token
+        }
+    }).then(handleFetchError).then(res => {
+        if (res.status === 400) {
+            inputErr = true
+        }
+        return res.json()
+    }).then((data) => {
+        return (inputErr) ? [false, data] : [true, data]
+    }).catch((error) => {
+        console.error(error)
+        return [false, null]
+    })
+}
+
 export { requestCreateAuthToken, requestDestroyAuthToken, requestUserInfo, requestEditUserInfo,
-         requestEditUserPassword, requestEditUserImage, requestGetUserImage, requestCreateUser };
+         requestEditUserPassword, requestEditUserImage, requestGetUserImage, requestCreateUser,
+         requestGetAllUsers, requestDeleteUser
+};

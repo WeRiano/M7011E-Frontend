@@ -36,18 +36,18 @@ export default function Profile() {
   }
 
   const fetchUserInfo = async (token) => {
-      let request = requestUserInfo(token)
-      const [success, data] = await request
-      if (success) {
-        setInitData(data)
-        emailRef.current.value = ''
-        firstNameRef.current.value = ''
-        lastNameRef.current.value = ''
-        addressRef.current.value = ''
-        cityRef.current.value = ''
-        zipCodeRef.current.value = ''
-      }
+    let request = requestUserInfo(token)
+    const [success, data] = await request
+    if (success) {
+      setInitData(data)
+      emailRef.current.value = ''
+      firstNameRef.current.value = ''
+      lastNameRef.current.value = ''
+      addressRef.current.value = ''
+      cityRef.current.value = ''
+      zipCodeRef.current.value = ''
     }
+  }
 
   useEffect(() => {
     let token = loadToken()

@@ -34,18 +34,12 @@ export function AuthProvider({ children }) {
 
   async function logout() {
     let token = loadToken()
-    if (token == null) {
-      setCurrentUser(null)
-      storeUser(currentUser)
-      return true
+    if (token != null) {
+      let request = requestDestroyAuthToken(token)
+      const [success, data] = await request
     }
-    let request = requestDestroyAuthToken(token)
-    const [success, data] = await request
-    if (success) {
-      setCurrentUser(null)
-      storeUser(currentUser)
-    }
-    return success
+    setCurrentUser(null)
+    storeUser(currentUser)
   }
 
   const value = {
