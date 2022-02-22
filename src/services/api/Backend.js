@@ -226,32 +226,6 @@ function requestGetAllUsers(auth_token) {
     })
 }
 
-function requestDeleteAccount(auth_token, password) {
-    let url = backendBaseUrl + "users/me/"
-
-    let inputErr = false;
-    return fetch(url, {
-        method: 'DELETE',
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Token " + auth_token
-        },
-        body: JSON.stringify({
-            current_password: password
-        })
-    }).then(handleFetchError).then(res => {
-        if (res.status === 400) {
-            inputErr = true
-        }
-        return res.json()
-    }).then((data) => {
-        return (inputErr) ? [false, data] : [true, data]
-    }).catch((error) => {
-        console.error(error)
-        return [false, null]
-    })
-}
-
 function requestDeleteUser(auth_token, user_id) {
     let url = backendBaseUrl + "admin/delete_user/" + user_id + "/"
 

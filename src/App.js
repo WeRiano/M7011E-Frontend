@@ -10,7 +10,7 @@ import Admin from './components/Admin'
 import Profile from './components/Profile'
 import PrivateRoute from './components/PrivateRoute'
 
-import { AuthProvider} from './contexts/AuthContext'
+import { AuthProvider } from './contexts/AuthContext'
 
 function App() {
   return (
